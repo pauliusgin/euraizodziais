@@ -1,11 +1,13 @@
 // Package euraizodziais renders a euro amount, given as an integer number of cents,
-// as Lithuanian words.
+// as Lithuanian or English words.
 //
-// The single entry point is [EuroAmountToWords]. It spells the euro part out in words,
-// picks the grammatically correct form of the euro noun, and appends the cents as two
-// digits followed by the literal "ct" — cents are never spelled out.
+// There is one entry point per language: [EuroAmountToLithuanianWords] for Lithuanian and
+// [EuroAmountToEnglishWords] for English. Each spells the euro part out in words, picks the
+// grammatically correct form of the euro noun, and appends the cents as two digits followed
+// by the literal "ct" — cents are never spelled out.
 //
-// euraizodziais.EuroAmountToWords(12345) // "vienas šimtas dvidešimt trys eurai 45 ct"
+//	euraizodziais.EuroAmountToLithuanianWords(12345) // "vienas šimtas dvidešimt trys eurai 45 ct"
+//	euraizodziais.EuroAmountToEnglishWords(12345)    // "one hundred twenty-three euros 45 ct"
 //
 // # Supported range
 //

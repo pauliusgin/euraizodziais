@@ -13,7 +13,7 @@ import (
 // platform.
 const maxAmountInCents int64 = math.MaxInt32
 
-// EuroAmountToWords renders an amount of euro cents as Lithuanian words, in the form
+// EuroAmountToLithuanianWords renders an amount of euro cents as Lithuanian words, in the form
 // "<euros in words> <euro noun> <cents> ct" — for example 12345 gives
 // "vienas šimtas dvidešimt trys eurai 45 ct". Cents are always two digits and are never
 // spelled out.
@@ -21,12 +21,9 @@ const maxAmountInCents int64 = math.MaxInt32
 // Supported amounts run from 0 to 2147483647 cents inclusive. Outside that range the
 // returned string is empty and the error is an [ErrNegativeAmount] or an [ErrAmountTooLarge],
 // both of which are types and so are matched with [errors.As] rather than [errors.Is].
-func EuroAmountToWords(amountInCents int) (string, error) {
-	if amountInCents < 0 {
-		return "", ErrNegativeAmount{AmountInCents: amountInCents}
-	}
-	if int64(amountInCents) > maxAmountInCents {
-		return "", ErrAmountTooLarge{AmountInCents: amountInCents}
+func EuroAmountToLithuanianWords(amountInCents int) (string, error) {
+	if err := validateAmountInCents(amountInCents); err != nil {
+		return "", err
 	}
 
 	euros := amountInCents / 100
@@ -38,4 +35,15 @@ func EuroAmountToWords(amountInCents int) (string, error) {
 		selectNounForm(euros, euroNounForms),
 		cents,
 	), nil
+}
+
+// validateAmountInCents enforces the supported range shared by every language.
+func validateAmountInCents(amountInCents int) error {
+	if amountInCents < 0 {
+		return ErrNegativeAmount{AmountInCents: amountInCents}
+	}
+	if int64(amountInCents) > maxAmountInCents {
+		return ErrAmountTooLarge{AmountInCents: amountInCents}
+	}
+	return nil
 }

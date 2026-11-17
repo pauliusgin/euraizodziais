@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestEuroAmountToWordsAnchorCases(t *testing.T) {
+func TestEuroAmountToLithuanianWordsAnchorCases(t *testing.T) {
 	cases := []struct {
 		name          string
 		amountInCents int
@@ -27,18 +27,18 @@ func TestEuroAmountToWordsAnchorCases(t *testing.T) {
 
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
-			got, err := EuroAmountToWords(testCase.amountInCents)
+			got, err := EuroAmountToLithuanianWords(testCase.amountInCents)
 			if err != nil {
-				t.Fatalf("EuroAmountToWords(%d) returned error %v", testCase.amountInCents, err)
+				t.Fatalf("EuroAmountToLithuanianWords(%d) returned error %v", testCase.amountInCents, err)
 			}
 			if got != testCase.want {
-				t.Errorf("EuroAmountToWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
+				t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
 			}
 		})
 	}
 }
 
-func TestEuroAmountToWordsCentsRendering(t *testing.T) {
+func TestEuroAmountToLithuanianWordsCentsRendering(t *testing.T) {
 	cases := []struct {
 		name          string
 		amountInCents int
@@ -55,18 +55,18 @@ func TestEuroAmountToWordsCentsRendering(t *testing.T) {
 
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
-			got, err := EuroAmountToWords(testCase.amountInCents)
+			got, err := EuroAmountToLithuanianWords(testCase.amountInCents)
 			if err != nil {
-				t.Fatalf("EuroAmountToWords(%d) returned error %v", testCase.amountInCents, err)
+				t.Fatalf("EuroAmountToLithuanianWords(%d) returned error %v", testCase.amountInCents, err)
 			}
 			if got != testCase.want {
-				t.Errorf("EuroAmountToWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
+				t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
 			}
 		})
 	}
 }
 
-func TestEuroAmountToWordsEuroNounForm(t *testing.T) {
+func TestEuroAmountToLithuanianWordsEuroNounForm(t *testing.T) {
 	cases := []struct {
 		name          string
 		amountInCents int
@@ -99,18 +99,18 @@ func TestEuroAmountToWordsEuroNounForm(t *testing.T) {
 
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
-			got, err := EuroAmountToWords(testCase.amountInCents)
+			got, err := EuroAmountToLithuanianWords(testCase.amountInCents)
 			if err != nil {
-				t.Fatalf("EuroAmountToWords(%d) returned error %v", testCase.amountInCents, err)
+				t.Fatalf("EuroAmountToLithuanianWords(%d) returned error %v", testCase.amountInCents, err)
 			}
 			if got != testCase.want {
-				t.Errorf("EuroAmountToWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
+				t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
 			}
 		})
 	}
 }
 
-func TestEuroAmountToWordsChunkBoundaries(t *testing.T) {
+func TestEuroAmountToLithuanianWordsChunkBoundaries(t *testing.T) {
 	cases := []struct {
 		name          string
 		amountInCents int
@@ -127,27 +127,27 @@ func TestEuroAmountToWordsChunkBoundaries(t *testing.T) {
 
 	for _, testCase := range cases {
 		t.Run(testCase.name, func(t *testing.T) {
-			got, err := EuroAmountToWords(testCase.amountInCents)
+			got, err := EuroAmountToLithuanianWords(testCase.amountInCents)
 			if err != nil {
-				t.Fatalf("EuroAmountToWords(%d) returned error %v", testCase.amountInCents, err)
+				t.Fatalf("EuroAmountToLithuanianWords(%d) returned error %v", testCase.amountInCents, err)
 			}
 			if got != testCase.want {
-				t.Errorf("EuroAmountToWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
+				t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want %q", testCase.amountInCents, got, testCase.want)
 			}
 		})
 	}
 }
 
-func TestEuroAmountToWordsRejectsNegativeAmount(t *testing.T) {
+func TestEuroAmountToLithuanianWordsRejectsNegativeAmount(t *testing.T) {
 	for _, amountInCents := range []int{-1, -100, -2147483648} {
-		got, err := EuroAmountToWords(amountInCents)
+		got, err := EuroAmountToLithuanianWords(amountInCents)
 		if got != "" {
-			t.Errorf("EuroAmountToWords(%d) = %q, want empty string", amountInCents, got)
+			t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want empty string", amountInCents, got)
 		}
 
 		var negativeAmount ErrNegativeAmount
 		if !errors.As(err, &negativeAmount) {
-			t.Fatalf("EuroAmountToWords(%d) error = %v, want ErrNegativeAmount", amountInCents, err)
+			t.Fatalf("EuroAmountToLithuanianWords(%d) error = %v, want ErrNegativeAmount", amountInCents, err)
 		}
 		if negativeAmount.AmountInCents != amountInCents {
 			t.Errorf("ErrNegativeAmount.AmountInCents = %d, want %d", negativeAmount.AmountInCents, amountInCents)
@@ -155,16 +155,16 @@ func TestEuroAmountToWordsRejectsNegativeAmount(t *testing.T) {
 	}
 }
 
-func TestEuroAmountToWordsRejectsTooLargeAmount(t *testing.T) {
+func TestEuroAmountToLithuanianWordsRejectsTooLargeAmount(t *testing.T) {
 	for _, amountInCents := range []int{2147483648, 9999999999} {
-		got, err := EuroAmountToWords(amountInCents)
+		got, err := EuroAmountToLithuanianWords(amountInCents)
 		if got != "" {
-			t.Errorf("EuroAmountToWords(%d) = %q, want empty string", amountInCents, got)
+			t.Errorf("EuroAmountToLithuanianWords(%d) = %q, want empty string", amountInCents, got)
 		}
 
 		var tooLarge ErrAmountTooLarge
 		if !errors.As(err, &tooLarge) {
-			t.Fatalf("EuroAmountToWords(%d) error = %v, want ErrAmountTooLarge", amountInCents, err)
+			t.Fatalf("EuroAmountToLithuanianWords(%d) error = %v, want ErrAmountTooLarge", amountInCents, err)
 		}
 		if tooLarge.AmountInCents != amountInCents {
 			t.Errorf("ErrAmountTooLarge.AmountInCents = %d, want %d", tooLarge.AmountInCents, amountInCents)
